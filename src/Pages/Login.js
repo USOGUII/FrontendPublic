@@ -90,6 +90,7 @@ export default function Registration() {
       localStorage.setItem('email', authenticatedUser.email);
       localStorage.setItem('role', authenticatedUser.role);
       localStorage.setItem('money', authenticatedUser.money);
+      localStorage.setItem('cartl', '0');
       console.log(authenticatedUser);
       setUser(authenticatedUser);
       console.log(localStorage);
@@ -97,6 +98,7 @@ export default function Registration() {
       window.location.reload(true);
     }
     else{
+    localStorage.setItem('cartl', '0');
     localStorage.setItem('authorId', authautor.authorId);
     localStorage.setItem('name', authautor.name);
     localStorage.setItem('familiya', authautor.familiya);

@@ -6,7 +6,7 @@ import Registration from "./Pages/Registration";
 import Basket from "./Pages/Basket";
 import Login from "./Pages/Login";
 import Notfound from "./Pages/Notfound";
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
+import {BrowserRouter as Router, Routes, Route, json} from "react-router-dom"
 import Items from "./Components/Items"
 import Categories from "./Components/Categories";
 import ShowFullItem from "./Components/ShowFullItem";
@@ -25,7 +25,8 @@ class App extends React.Component {
       currentItems: [],
       items: [],
       showFullItem: false,
-      fullItem: {}
+      fullItem: {},
+      iitems: []
     }
     const data3 = localStorage.getItem('token'); 
     this.state.currentItems = this.state.items;
@@ -41,42 +42,28 @@ class App extends React.Component {
           items: res.data
         })
         localStorage.setItem('token', JSON.stringify(res.data));
+        axios.get("https://localhost:7102/api/AuthorBooks")
+        .then(res1 => {
+          this.setState({
+            iitems: res1.data
+          })
+          localStorage.setItem('authtoken', JSON.stringify(res1.data));
+        })
       })
   }
-  /*LoadUsers(){
-    axios.get("https://localhost:7102/api/Books").then(res => {
-        var TempItemsStorage = [];
-        res.data.forEach(element => {
-          TempItemsStorage.push({
-            BookName: element.BookName,
-            BookDescription: element.BookDescription,
-            BookAuthor: element.BookAuthor,
-            BookDate: element.BookDate,
-            BookGenre: element.BookGenre,
-            BookLenght: element.BookLenght,
-            imgUrl: element.imgUrl,
-            BookPrice: element.BookPrice,
-            PublishingHouseId : element.PublishingHouseId
-          })
-        });
 
-        this.setState({
-          items: []
-        }, () => this.setState({
-          items: TempItemsStorage
-        }))
-    })
-  }*/
+
   render() {
     return (
       <div>
         <Header orders={this.state.orders} onDelete={this.deleteOrder} />
         <div className="wrapper">
           <div className='presentation'></div>
-          <Categories chooseCategory={this.chooseCategory} />
+          <h className='titlefilter'>ИЗДАТЕЛЬСКИЕ КНИГИ</h>
           <Items onShowItem={this.onShowItem} items={this.state.items} onAdd={this.addToOrder}/>
           {this.state.showFullItem && <ShowFullItem onAdd={this.addToOrder} onShowItem={this.onShowItem} item={this.state.fullItem} />}
-          <Items onShowItem={this.onShowItem} items={this.state.items} onAdd={this.addToOrder}/>
+          <h className='titlefilter'>АВТОРСКИЕ КНИГИ</h>
+          <Items onShowItem={this.onShowItem} items={this.state.iitems} onAdd={this.addToOrder}/>
           {this.state.showFullItem && <ShowFullItem onAdd={this.addToOrder} onShowItem={this.onShowItem} item={this.state.fullItem} />}
           <Footer />
         </div>
@@ -101,26 +88,51 @@ class App extends React.Component {
     })
   }
 
-  deleteOrder(bookId) {
-    this.setState({orders: this.state.orders.filter(el => el.bookId !== bookId)});
+  deleteOrder(bookId, authorBookId) {
+    if (bookId>0){
+    this.setState({orders: this.state.orders.filter(el => el.bookId !== bookId)});  
     let orders = JSON.parse(localStorage.getItem("cart")) || [];
     orders = orders.filter(el => el.bookId !== bookId);
     localStorage.setItem("cart", JSON.stringify(orders));
-    this.setState({orders: orders});
+    this.setState({orders: orders});}
+    if (authorBookId>0){
+      this.setState({orders: this.state.orders.filter(el => el.authorBookId !== authorBookId)});   
+      let orders = JSON.parse(localStorage.getItem("cart")) || [];
+      orders = orders.filter(el => el.authorBookId !== authorBookId);
+      localStorage.setItem("cart", JSON.stringify(orders));
+      this.setState({orders: orders});
+    }
+    localStorage.setItem('cartl', JSON.stringify(parseInt(localStorage.getItem('cartl'))-1));
   }
 
   addToOrder(item) {
     let isInArray = false
     this.state.orders.forEach(el => {
       if(el.bookId === item.bookId)
-        isInArray=true
+        isInArray=true;
     })
     if(!isInArray){
       this.setState({ orders: [...this.state.orders, item]}, () => {
         console.log(this.state.orders)
       })
       localStorage.setItem('cart',JSON.stringify([...this.state.orders, item]));
+      localStorage.setItem('cartl', this.state.orders.length+1);
       console.log(localStorage.getItem('cart'));
+    }
+    else{
+    isInArray = false;
+    this.state.orders.forEach(el => {
+      if(el.authorBookId === item.authorBookId)
+        isInArray=true;
+    })
+    if(!isInArray){
+      this.setState({ orders: [...this.state.orders, item]}, () => {
+        console.log(this.state.orders)
+      })
+      localStorage.setItem('cart',JSON.stringify([...this.state.orders, item]));
+      localStorage.setItem('cartl', this.state.orders.length+1);
+      console.log(localStorage.getItem('cart'));
+    }
     }
   }
 }

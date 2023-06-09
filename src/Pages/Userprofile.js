@@ -6,6 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
 export default function Userprofile() {
+  const showNothing = () => {
+    return(<div className='empty'>
+      <h2>Библиотека пуста!</h2>
+    </div>)
+  }
     return(
       <div>
       <header className='stickyfingers'>

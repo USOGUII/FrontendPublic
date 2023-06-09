@@ -9,7 +9,7 @@ export class ShowFullItem extends Component {
             <img src={this.props.item.imgUrl} onClick={() => this.props.onShowItem(this.props.item)} />
             <h2>{this.props.item.bookName}</h2>
             <div>
-            <h3>Автор: {this.props.item.bookAuthor}</h3>
+            <h3>Автор: {this.props.item.bookAuthor} {this.props.item.authName} {this.props.item.authFamiliya} {this.props.item.authOtchestvo}</h3>
             {this.props.item.bookGenre==='порно' && <h3>Жанр: {this.props.item.bookGenre}</h3>}
             <h3>Дата создания: {this.props.item.bookDate}</h3>
             <h3>Вес книги: {this.props.item.bookLenght} МБ</h3>

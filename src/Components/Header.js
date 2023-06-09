@@ -5,16 +5,45 @@ import Order from './Order'
 import Items from "./Items"
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import axios from 'axios';
+
+const handleBuy = (summa) =>{
+  if (summa<=localStorage.getItem('money')){
+  const moneytemp = localStorage.getItem('money');
+  const url = 'https://localhost:7102/Users';
+  localStorage.setItem('money', (parseFloat(moneytemp-summa)).toString());
+  axios.put((url), {
+      UserId: parseInt(localStorage.getItem('userId')),
+      Money: -summa
+  }).then(() => {
+      const myObject = JSON.parse(localStorage.getItem('cart'))
+      for (let i=0; i<parseInt(localStorage.getItem('cartl'));i=i+1){ //здесь сделать if для авторских и изд книг
+      axios.post(('https://localhost:7102/api/PurchaseList'), {
+        UserId: localStorage.getItem('userId'),
+        BookId: myObject[i].bookId
+      })}
+      alert('Покупка успешно оформлена!');
+      localStorage.setItem('cartl', '0');
+      window.location.reload(true);
+  }).catch((err) => {
+      alert(err);
+  })}
+  else{
+    alert('Недостаточно средств!')
+  }
+}
 
 const showOrders = (props) => {
   let summa =0
   props.orders.forEach(el => summa += Number.parseFloat(el.bookPrice))
   return (<div>
     {props.orders.map(el => (
-      <Order onDelete={props.onDelete} key={el.bookId} item={el}/>
+      <Order onDelete={props.onDelete} key={(el.bookId, el.authorBookId)} item={el}/>
     ))}
-    <p className='summa'>Сумма: {summa}р.</p>
-  </div>)
+    <p className='summa'>Сумма: {summa  }р.</p>
+    <button className='Oformit' type='button' onClick={() => handleBuy(summa)}>Купить</button>
+    <p className='summa'></p>
+    </div>)
 }
 
 const showNothing = () => {

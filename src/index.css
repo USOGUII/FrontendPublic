@@ -85,9 +85,9 @@ header ul.nav li:hover {
 
 .presentation::after {
     content: 'Выбери книгу прямо сейчас!';
-    position: absolute;
-    top:215px;
-    left: 350px;
+    position: relative;
+    top: 120px;
+    left: 240px;
     width: 500px;
     font-size: 60px;
     font-weight: 600;
@@ -101,18 +101,40 @@ div.InfoProfile{
 }
 
 div.BibliotekaA{
-    margin-top: px;
+    margin-top: 20px;
     width: 500px;
     position: relative;
     margin-left: 300px;
 }
 
 div.BibliotekaB{
-    margin-top: 170px;
+    margin-top: 50px;
     width: 500px;
     position: relative;
     margin-left: 300px;
 }
+
+.Oformit{
+    font-family: sans-serif;
+    letter-spacing: 1px;
+    font-size: 16px;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 5px;
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    background-size: cover;
+    color: #fff;
+    background-color: #16af2d;
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: sans-serif;
+    letter-spacing: 1px;
+    font-size: 16px;
+}
+
 
 .presentation::before {
     content: 'Читай! Расти! Развивайся! Узнавай! Будь лучшей версией себя!';
@@ -249,6 +271,16 @@ div .registration {
     margin-top: 30px;
 }
 
+.formauth {
+    width:300px;
+    padding: 32px;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px #ccc;
+    font-family: sans-serif;
+    letter-spacing: 1px;
+    margin-top: 30px;
+}
+
 .HaveAccountLogin{
     margin-top: 41.5%;
     margin-left: -12.5%;
@@ -340,7 +372,7 @@ header .shop-cart-button.active {
 header .shop-cart {
     position:absolute;
     top:50px;
-    margin-left:700px;
+    margin-left:550px;
     width:450px;
     background: #fafafa;
     -webkit-box-shadow: 4px 5px 15px -7px #606060;
@@ -397,6 +429,16 @@ header .shop-cart .summa {
     font-weight: 600;
     font-size: 20px;
     margin-bottom: 20px;
+}
+
+h.titlefilter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 500px;
+    margin-right: 500px;
+    font-weight: 200;
+    font-size: 21px;
 }
 
 footer {
