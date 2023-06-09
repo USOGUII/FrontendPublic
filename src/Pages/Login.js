@@ -16,6 +16,7 @@ export default function Registration() {
     const [formvalid, setformvalid] = useState(false)
     const [users, setUsers] = useState([]);
     const [user, setUser] = useState(null);
+    const [authors, setAuthors] = useState([]);
     const navigate = useNavigate();
 
     const blurHandler = (e) => {
@@ -66,13 +67,42 @@ export default function Registration() {
     });
   }, []);
 
+  useEffect(() => {
+    axios.get('https://localhost:7102/api/Authors').then((res) => {
+        setAuthors(res.data);
+    }).catch((err) => {
+        console.error(err);
+        alert('Ошибка при попытке достать данные об авторах');
+    });
+  }, []);
+
   const handleSave = () =>{;
     const authenticatedUser = users.find((u) => u.userLogin === login && u.password === password);
     if (!authenticatedUser) {
         alert('Неправильный логин или пароль');
         return;
     }
+    const authautor = authors.find((u) => u.userId === authenticatedUser.userId);
+    if (!authautor){
+      localStorage.setItem('authorId', '0');
+      localStorage.setItem('userId', authenticatedUser.userId);
+      localStorage.setItem('userLogin', authenticatedUser.userLogin);
+      localStorage.setItem('email', authenticatedUser.email);
+      localStorage.setItem('role', authenticatedUser.role);
+      localStorage.setItem('money', authenticatedUser.money);
+      console.log(authenticatedUser);
+      setUser(authenticatedUser);
+      console.log(localStorage);
+      navigate("/Shop");
+      window.location.reload(true);
+    }
+    else{
+    localStorage.setItem('authorId', authautor.authorId);
+    localStorage.setItem('name', authautor.name);
+    localStorage.setItem('familiya', authautor.familiya);
+    localStorage.setItem('otchestvo', authautor.otchestvo);
     localStorage.setItem('userId', authenticatedUser.userId);
+    localStorage.setItem('email', authenticatedUser.email);
     localStorage.setItem('userLogin', authenticatedUser.userLogin);
     localStorage.setItem('role', authenticatedUser.role);
     localStorage.setItem('money', authenticatedUser.money);
@@ -81,6 +111,7 @@ export default function Registration() {
     console.log(localStorage);
     navigate("/Shop");
     window.location.reload(true);
+    }
     }
 
 
@@ -101,9 +132,9 @@ export default function Registration() {
           {(passwordDirty && passworderror) && <div style={{color:'red'}}>{passworderror}</div>}
           <input onBlur = {e => blurHandler(e)}  className='form_input' name='password' type='password' placeholder='Пароль' onChange={(e) => handlePasswordChange(e.target.value)}/>
           </div>
-          <button disabled={!formvalid} className='form_button' type='submit' onClick={() => handleSave() }  >Войти</button>
+          <button disabled={!formvalid} className='form_button' type='button' onClick={() => handleSave() }  >Войти</button>
         </form>
-        <button className='HaveAccount' type='submit' onClick={() => window.location.href = '/'}>Еще нет аккаунта?</button>
+        <button className='HaveAccount' type='button' onClick={() => window.location.href = '/'}>Еще нет аккаунта?</button>
         </body>
       </div>
     );

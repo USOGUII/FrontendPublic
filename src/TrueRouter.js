@@ -8,16 +8,22 @@ import Dobav from "./Pages/Dobav";
 import Notfound from "./Pages/Notfound";
 import AddMoney from "./Pages/AddMoney";
 import UserProfileNotanAuthor from "./Pages/UserProfileNotanAuthor";
+import Userprofile from "./Pages/Userprofile";
+import DobavAuthorBook from "./Pages/DobavAuthorBook";
+import DobavForAuthors from "./Pages/DobavForAuthors";
 
 
 const TrueRouter = () => {
     return (
         <BrowserRouter>
             <Routes>
+                {(localStorage.length!==0 && localStorage.getItem('role')>0) && <Route path="/UserProfile" element={<Userprofile/>}/>}
                 {(localStorage.length!==0 && localStorage.getItem('role')<1) && <Route path="/User" element={<UserProfileNotanAuthor/>}/>}
                 {localStorage.length!==0 && <Route path="/AddMoney" element={<AddMoney/>}/>}               
                 {localStorage.length!==0 && <Route path="/Home" element={<Home/>}/>}
-                {(localStorage.length!==0 && localStorage.getItem('role')>0) && <Route path="/Dobav" element={<Dobav/>}/>}
+                {(localStorage.length!==0 && localStorage.getItem('role')==1) && <Route path="/DobavForAuthors" element={<DobavForAuthors/>}/>}
+                {(localStorage.length!==0 && localStorage.getItem('role')==2) && <Route path="/DobavAuthorBook" element={<DobavAuthorBook/>}/>}
+                {(localStorage.length!==0 && localStorage.getItem('role')==2) && <Route path="/Dobav" element={<Dobav/>}/>}
                 {localStorage.length!==0 && <Route path = '/Shop' element = {<App/>}/>}
                 {localStorage.length===0 && <Route path = '' element = {<Registration/>}/>}
                 {localStorage.length===0 && <Route path="/Login" element={<Login/>}/>}

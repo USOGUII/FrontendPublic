@@ -4,25 +4,21 @@ import Header from '../Components/Header'
 import { NavLink } from 'react-router-dom'
 import App from '../App'
 
-export default function Dobav() {
+export default function DobavAuthorBook() {
     const [Name1, setBookName] = useState('')
     const [Description, setBookDescription] = useState('')
-    const [Author, setBookAuthor] = useState('')
     const [Date, setBookDate] = useState('')
     const [Genre, setBookGenre] = useState('')
     const [Price, setBookPrice] = useState('')
     const [Image, setBookImageUrl] = useState('')
     const [Lenght1, setBookLenght] = useState('')
-    const [Idpub, setIdPub] = useState('')
+    const [AuthId, setAuthId] = useState('')
 
     const handleBookNameChange = (value) => {
       setBookName(value);
     };
     const handleBookDescriptionChange = (value) => {
       setBookDescription(value);
-    };
-    const handleBookAuthorChange = (value) => {
-      setBookAuthor(value);
     };
     const handleBookDateChange = (value) => {
       setBookDate(value);
@@ -39,23 +35,22 @@ export default function Dobav() {
     const handleBookLenghtChange = (value) => {
       setBookLenght(value);
     };
-    const handleIdPubChange = (value) => {
-      setIdPub(value);
+    const handleAuthIdChange = (value) => {
+      setAuthId(value);
     };
 
     const handleSave = () =>{;
-      axios.post('https://localhost:7102/api/Books', {
+      axios.post('https://localhost:7102/api/AuthorBooks', {
         BookName: Name1,
         BookDescription: Description,
-        BookAuthor: Author,
         BookDate: Date,
         BookGenre: Genre,
         BookLenght: Lenght1,
         imgUrl: Image,
         BookPrice: parseInt(Price),
-        PublishingHouseId : parseInt(Idpub)
+        AuthorId: parseInt(AuthId)
       }).then((response) => {
-        alert('Книга добавлена в каталог!');
+        alert('Книга добавлена в каталог');
         window.location.reload(true);
       }).catch((err) => {
         console.error(err);
@@ -82,10 +77,6 @@ export default function Dobav() {
           </div>
 
           <div className='form_group'>
-          <input className='form_input' name='login' type='text' placeholder='Автор' onChange={(e) => handleBookAuthorChange(e.target.value)}/>
-          </div>
-
-          <div className='form_group'>
           <input className='form_input' name='login' type='text' placeholder='Дата издания' onChange={(e) => handleBookDateChange(e.target.value)}/>
           </div>
 
@@ -106,7 +97,7 @@ export default function Dobav() {
           </div>
 
           <div className='form_group'>
-          <input className='form_input' name='login' type='text' placeholder='Id Издательского Дома' onChange={(e) => handleIdPubChange(e.target.value)}/>
+          <input className='form_input' name='login' type='text' placeholder='Id Автора' onChange={(e) => handleAuthIdChange(e.target.value)}/>
           </div>
           
           <button className='form_button' type='button' onClick={() => handleSave()}>Добавить</button>

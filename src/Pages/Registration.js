@@ -93,8 +93,8 @@ export default function Registration() {
       navigate('/Login');
       window.location.reload(true);
     }).catch((err) => {
-      console.error(err);
-      alert(err);
+      console.error(err.response.data);
+      alert(err.response.data);
     });
     }
 
@@ -120,9 +120,9 @@ export default function Registration() {
           {(passwordDirty && passworderror) && <div style={{color:'red'}}>{passworderror}</div>}
           <input onBlur = {e => blurHandler(e)}  className='form_input' name='password' type='password' placeholder='Пароль' onChange={(e) => handlePasswordChange(e.target.value)}/>
           </div>
-          <button disabled={!formvalid} className='form_button' type='submit' onClick={() => handleSave() }  >Зарегестрироваться</button>
+          <button disabled={!formvalid} className='form_button' type='button' onClick={() => handleSave() }  >Зарегестрироваться</button>
         </form>
-        <button className='HaveAccount' type='submit' onClick={() => window.location.href = '/Login'}>Уже есть аккаунт?</button>
+        <button className='HaveAccount' type='button' onClick={() => window.location.href = '/Login'}>Уже есть аккаунт?</button>
         </body>
       </div>
     );

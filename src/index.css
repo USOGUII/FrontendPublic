@@ -94,6 +94,26 @@ header ul.nav li:hover {
     color:#fff;
 }
 
+div.InfoProfile{
+    width: 500px;
+    position: relative;
+    margin-left: 300px;
+}
+
+div.BibliotekaA{
+    margin-top: px;
+    width: 500px;
+    position: relative;
+    margin-left: 300px;
+}
+
+div.BibliotekaB{
+    margin-top: 170px;
+    width: 500px;
+    position: relative;
+    margin-left: 300px;
+}
+
 .presentation::before {
     content: 'Читай! Расти! Развивайся! Узнавай! Будь лучшей версией себя!';
     position: absolute;
@@ -226,6 +246,7 @@ div .registration {
     font-family: sans-serif;
     letter-spacing: 1px;
     margin-bottom: -20%;
+    margin-top: 30px;
 }
 
 .HaveAccountLogin{

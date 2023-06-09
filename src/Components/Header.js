@@ -64,9 +64,10 @@ const [pointer, setpointer] = useState('')
         <span className='logo'><NavLink to="/Shop">exeBooks</NavLink></span>
         <ul className='nav'>
           {localStorage.getItem('role')==2 && <li><NavLink to="/Dobav">Добавить изд. книгу</NavLink></li>}
-          {(localStorage.getItem('role')==1 || localStorage.getItem('role')==2) && <li><NavLink to="/Dobav">Добавить книгу автора</NavLink></li>}  
+          {localStorage.getItem('role')==2 && <li><NavLink to="/DobavAuthorBook">Добавить книгу автора</NavLink></li>}
+          {(localStorage.getItem('role')==1) && <li><NavLink to="/DobavForAuthors">Добавить свою книгу</NavLink></li>}  
           {localStorage.getItem('role')==0 && <li className='welcome'><NavLink to="/User">{localStorage.getItem('userLogin').slice(0,10)+pointer}</NavLink></li>}
-          {localStorage.getItem('role')==1 && <li className='welcome'>{localStorage.getItem('userLogin').slice(0,10)+pointer}</li>}
+          {localStorage.getItem('role')==1 && <li className='welcome'><NavLink to="/UserProfile">{localStorage.getItem('userLogin').slice(0,10)+pointer}</NavLink></li>}
           <li><NavLink to="/AddMoney">{localStorage.getItem('money')}р</NavLink></li>
           <li onClick={() => handleExit() }><NavLink to="/">Выйти</NavLink></li>
         </ul>  

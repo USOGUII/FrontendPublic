@@ -59,7 +59,7 @@ export default function AddMoney() {
           <div className='form_group'>
           <input className='form_input' name='email' type='text' placeholder='Сумма в рублях' onChange={(e) => handleMoneyChange(e.target.value)}/>
           </div>
-          <button className='form_button' type='submit' onClick={() => handleSave() }  >Пополнить счёт</button>
+          <button className='form_button' type='button' onClick={() => handleSave() }  >Пополнить счёт</button>
         </form>
         </body>
       </div>
