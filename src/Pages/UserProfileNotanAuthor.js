@@ -58,24 +58,9 @@ export default function UserProfileNotanAuthor() {
     }
 }, [nameerror, familiyaerror])
 
-  //var procent = document.getElementById("jqueryselect").value;
-  var procent = '1';
+  var e = document.getElementById("jqueryselect");
+  var procent = e?.value;
 
-const OneMore = () =>{;
-  alert('Вы стали автором!');
-  const url1 = 'https://localhost:7102/Users/role';
-  axios.put(url1,{
-    UserId: parseInt(localStorage.getItem('userId')),
-    role: 1
-  }).then(()=> {
-    alert('Вам добавлены новые возможности!')
-    localStorage.setItem('role', '1')
-    navigate('/Shop');
-    window.location.reload(true);
-  }).catch((err) => {
-    alert(err);
-  })
-}
 
   const handleSave = () =>{;
     const url = 'https://localhost:7102/api/Authors';
@@ -83,7 +68,7 @@ const OneMore = () =>{;
       Name: name,
       Familiya: familiya,
       Otchestvo: otchestvo,
-      procent: 1,
+      procent: procent,
       UserId: localStorage.getItem('userId')
     }).then(() => {
       alert('Вы стали автором!');
@@ -92,9 +77,9 @@ const OneMore = () =>{;
         UserId: parseInt(localStorage.getItem('userId')),
         role: 1
       }).then(()=> {
-        alert('Вам добавлены новые возможности!')
-        localStorage.setItem('role', '1')
-        navigate('/Shop');
+        alert('Для продолжения работы в кабинете автора требуется повторная авторизация!')
+        localStorage.clear()
+        navigate('/Login');
         window.location.reload(true);
       }).catch((err) => {
         alert(err);
@@ -107,10 +92,17 @@ const OneMore = () =>{;
 
 
     return(
-        <div className='registration'>
-        <header>
-          <span className='logoREG'><NavLink to="/Shop">exeBooks</NavLink></span>
+      <div>
+      <header className='stickyfingers'>
+      <div className='wrapper'>
+        <span className='logo'><NavLink to="/Shop">exeBooks</NavLink></span>
+        </div>
         </header>
+        <div className='InfoProfile'>
+        <h2>Email пользователя: {localStorage.getItem('email')}</h2>
+        <h2>Login пользователя: {localStorage.getItem('userLogin')}</h2>
+        </div>
+        <div className='registration'>
         <body>
         <form className='form'>
           <h1 className='form_title'>Станьте автором!</h1>
@@ -127,12 +119,19 @@ const OneMore = () =>{;
           </div>
           <div className='form_group'>
             <p style={{fontFamily: 'sans-serif'}}>Выберите % отчислений</p>
-          <select className='form_select' id="jqueryselect"><option value='40'>40%</option><option value="50">50%</option><option value="60">60%</option>
+          <select className='form_select' id="jqueryselect"><option value='40' selected="selected">40%</option><option value="50">50%</option><option value="60">60%</option>
           </select>
           </div>
-          <button disabled={!formvalid} className='form_button' type='submit' onClick={() => {handleSave(); OneMore();} }  >Стать автором!</button>
+          <button disabled={!formvalid} className='form_button' type='button' onClick={() => handleSave() }  >Стать автором!</button>
         </form>
         </body>
+        </div>
+        <div className='BibliotekaA'>
+        <h2>Библиотека авторских книг:</h2>
+        </div>
+        <div className='BibliotekaB'>
+        <h2>Библиотека издательских книг:</h2>
+        </div>
         </div>
     );
 }
