@@ -61,6 +61,12 @@ export default function UserProfileNotanAuthor() {
   var e = document.getElementById("jqueryselect");
   var procent = e?.value;
 
+  const showNothing = () => {
+    return(<div className='empty'>
+      <h2>Библиотека пуста!</h2>
+    </div>)
+  }
+
 
   const handleSave = () =>{;
     const url = 'https://localhost:7102/api/Authors';
@@ -104,7 +110,7 @@ export default function UserProfileNotanAuthor() {
         </div>
         <div className='registration'>
         <body>
-        <form className='form'>
+        <form className='formauth'>
           <h1 className='form_title'>Станьте автором!</h1>
           {(nameDirty && nameerror) && <div style={{color:'red'}}>{nameerror}</div>}
           <div className='form_group'>
