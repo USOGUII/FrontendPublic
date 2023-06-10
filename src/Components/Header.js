@@ -18,10 +18,17 @@ const handleBuy = (summa) =>{
   }).then(() => {
       const myObject = JSON.parse(localStorage.getItem('cart'))
       for (let i=0; i<parseInt(localStorage.getItem('cartl'));i=i+1){ //здесь сделать if для авторских и изд книг
-      axios.post(('https://localhost:7102/api/PurchaseList'), {
-        UserId: localStorage.getItem('userId'),
-        BookId: myObject[i].bookId
-      })}
+        if(myObject[i].bookId>0){
+        axios.post(('https://localhost:7102/api/PurchaseList'), {
+          UserId: localStorage.getItem('userId'),
+          BookId: myObject[i].bookId
+        })}
+        else{
+          axios.post(('https://localhost:7102/api/PurchaseListA'), {
+            UserId: localStorage.getItem('userId'),
+            AuthorBookId: myObject[i].authorBookId
+        })}
+      }
       alert('Покупка успешно оформлена!');
       localStorage.setItem('cartl', '0');
       window.location.reload(true);
@@ -96,7 +103,7 @@ const [pointer, setpointer] = useState('')
           {localStorage.getItem('role')==2 && <li><NavLink to="/DobavAuthorBook">Добавить книгу автора</NavLink></li>}
           {(localStorage.getItem('role')==1) && <li><NavLink to="/DobavForAuthors">Добавить свою книгу</NavLink></li>}  
           {localStorage.getItem('role')==0 && <li className='welcome'><NavLink to="/User">{localStorage.getItem('userLogin').slice(0,10)+pointer}</NavLink></li>}
-          {localStorage.getItem('role')==1 && <li className='welcome'><NavLink to="/UserProfile">{localStorage.getItem('userLogin').slice(0,10)+pointer}</NavLink></li>}
+          {(localStorage.getItem('role')==1 || localStorage.getItem('role')==2)&& <li className='welcome'><NavLink to="/UserProfile">{localStorage.getItem('userLogin').slice(0,10)+pointer}</NavLink></li>}
           <li><NavLink to="/AddMoney">{localStorage.getItem('money')}р</NavLink></li>
           <li onClick={() => handleExit() }><NavLink to="/">Выйти</NavLink></li>
         </ul>  

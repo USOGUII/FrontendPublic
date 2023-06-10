@@ -12,6 +12,7 @@ export default function DobavAuthorBook() {
     const [Price, setBookPrice] = useState('')
     const [Image, setBookImageUrl] = useState('')
     const [Lenght1, setBookLenght] = useState('')
+    const [BookUrl, setBookUrl] = useState('')
     const [AuthId, setAuthId] = useState('')
 
     const handleBookNameChange = (value) => {
@@ -38,6 +39,9 @@ export default function DobavAuthorBook() {
     const handleAuthIdChange = (value) => {
       setAuthId(value);
     };
+    const handleBookUrlChange = (value) => {
+      setBookUrl(value);
+    };
 
     const handleSave = () =>{;
       axios.post('https://localhost:7102/api/AuthorBooks', {
@@ -47,6 +51,7 @@ export default function DobavAuthorBook() {
         BookGenre: Genre,
         BookLenght: Lenght1,
         imgUrl: Image,
+        BookUrl: BookUrl,
         BookPrice: parseInt(Price),
         AuthorId: parseInt(AuthId)
       }).then((response) => {
@@ -54,7 +59,7 @@ export default function DobavAuthorBook() {
         window.location.reload(true);
       }).catch((err) => {
         console.error(err);
-        alert(err);
+        alert("Данные были заполнены не верно");
       });
       }
 
@@ -93,8 +98,13 @@ export default function DobavAuthorBook() {
           </div>
 
           <div className='form_group'>
-          <input className='form_input' name='login' type='text' placeholder='Длинна' onChange={(e) => handleBookLenghtChange(e.target.value)}/>
+          <input className='form_input' name='login' type='text' placeholder='Вес, МБ' onChange={(e) => handleBookLenghtChange(e.target.value)}/>
           </div>
+
+          <div className='form_group'>
+          <input className='form_input' name='login' type='text' placeholder='Url на скачивание книги' onChange={(e) => handleBookUrlChange(e.target.value)}/>
+          </div>
+
 
           <div className='form_group'>
           <input className='form_input' name='login' type='text' placeholder='Id Автора' onChange={(e) => handleAuthIdChange(e.target.value)}/>
